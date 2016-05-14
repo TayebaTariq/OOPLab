@@ -76,6 +76,7 @@ public:
 		cout << "1- Query your bank statement." << endl
 			<< "2- Transfer ammount." << endl
 			<< "3- Pay your bill." << endl
+			<< "4- Withdraw money." << endl
 			<< "Choice: ";
 	}
 
@@ -85,18 +86,25 @@ public:
 			<< "\tAccount number: " << u[i].getAccNum() << endl
 			<< "\tPresent amount: " << u[i].getAccAm() << endl;
 	}
-	void transferAmount(int i,int j, int amount)
+	void transferAmount(int i, int j, int amount)
 	{
 		u[i].setAccAm(u[i].getAccAm() - amount);
 		u[j].setAccAm(u[j].getAccAm() + amount);
-		cout << "\tAmount " << amount << " transferesd to account number " << j+1 << endl;
+		cout << "\tAmount " << amount << " transferesd to account number " << j + 1 << endl;
 		cout << "Your current amount is now " << u[i].getAccAm() << endl;
 	}
 
-	void payBill(int i,int billAmount)
+	void payBill(int i, int billAmount)
 	{
 		u[i].setAccAm(u[i].getAccAm() - billAmount);
 		cout << "\tBill payed.." << endl;
+		cout << "Your current amount is now " << u[i].getAccAm() << endl;
+	}
+
+	void withdrawmoney(int i, int withdrawlAmount)
+	{
+		u[i].setAccAm(u[i].getAccAm() - withdrawlAmount);
+		cout << "\tAmount withdrew.." << endl;
 		cout << "Your current amount is now " << u[i].getAccAm() << endl;
 	}
 };
@@ -105,7 +113,7 @@ ATM a;
 
 void functionAtm(int number)//, int number2, int bill, int amount, int ch)
 {
-	int number2, amount, bill, ch;
+	int number2, amount, bill, ch, withdraw;
 	cout << endl << "   Menu" << endl;
 	a.menu();
 	cin >> ch; a.setC(ch);
@@ -123,15 +131,15 @@ void functionAtm(int number)//, int number2, int bill, int amount, int ch)
 		{
 			if (number2 == a.getu1AccNum())
 			{
-				a.transferAmount(number, number2-1, amount);
+				a.transferAmount(number, number2 - 1, amount);
 			}
 			else if (number2 == a.getu2AccNum())
 			{
-				a.transferAmount(number, number2-1, amount);
+				a.transferAmount(number, number2 - 1, amount);
 			}
 			else if (number2 == a.getu3AccNum())
 			{
-				a.transferAmount(number, number2-1, amount);
+				a.transferAmount(number, number2 - 1, amount);
 			}
 			else
 			{
@@ -156,6 +164,19 @@ void functionAtm(int number)//, int number2, int bill, int amount, int ch)
 			cout << "You don't have enough amount to pay your bill." << endl;
 		}
 	}
+	else if (a.getC() == 4)
+	{
+		cout << "\tEnter the amount of withdrawl: ";
+		cin >> withdraw;
+		if (withdraw <= a.getu1AccAmount())
+		{
+			a.withdrawmoney(number, withdraw);
+		}
+		else
+		{
+			cout << "You don't have enough amount to withdraw." << endl;
+		}
+	}
 	else
 	{
 		cout << "You have entered wrong choice. " << endl;
@@ -167,7 +188,7 @@ int main()
 {
 	char name[50]; int number;
 
-	
+
 	a.setu1Name("ali"); a.setu1AccNum(1); a.setu1AccAm(10000);
 	a.setu2Name("aliya"); a.setu2AccNum(2); a.setu2AccAm(50000);
 	a.setu3Name("zahir"); a.setu3AccNum(3); a.setu3AccAm(20000);
@@ -184,15 +205,15 @@ int main()
 
 		if ((strcmp(name, a.getu1Name()) == 0) && (number == a.getu1AccNum()))
 		{
-			functionAtm(number-1);
+			functionAtm(number - 1);
 		}
 		else if ((strcmp(name, a.getu2Name()) == 0) && (number == a.getu2AccNum()))
 		{
-			functionAtm(number-1);
+			functionAtm(number - 1);
 		}
 		else if ((strcmp(name, a.getu3Name()) == 0) && (number == a.getu3AccNum()))
 		{
-			functionAtm(number-1);
+			functionAtm(number - 1);
 		}
 		else
 		{
